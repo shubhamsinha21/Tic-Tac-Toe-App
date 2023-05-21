@@ -23,6 +23,7 @@ function App(): JSX.Element {
   }
 
   const checkIsWinner = () => {
+    // checking winner of game
     if(
       gameState[0] !== 'empty' &&
       gameState[0] === gameState[1] &&
@@ -89,9 +90,27 @@ function App(): JSX.Element {
   }
     
   const onChangeItem = (itemNumber:number) =>{
-
+    if(gameWinner) {
+      return Snackbar.show({
+        text:'gameWinner',
+        backgroundColor:'#000000',
+        textColor:'#FFFFFF'
+      })
+    }
+    if(gameState[itemNumber] === 'empty'){
+      gameState[itemNumber] = isCross ? 'cross' : 'circle'
+      setIsCross (!isCross)
+    }
+    else{
+      return Snackbar.show({
+        text:'Position is filled',
+        backgroundColor:'red',
+        textColor:'#FFF'
+      })
+    }
   }
   
+  checkIsWinner()
 
   return (
     <SafeAreaView >
