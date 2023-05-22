@@ -60,13 +60,13 @@ function App(): JSX.Element {
       gameState[2] === gameState[5] &&
       gameState[5] === gameState[8]
     ) {
-      setGameWinner(`${gameState[2]}won the game ! 😊`);
+      setGameWinner(`${gameState[2]} won the game ! 😊`);
     } else if (
       gameState[0] !== 'empty' &&
       gameState[0] === gameState[4] &&
       gameState[4] === gameState[8]
     ) {
-      setGameWinner(`${gameState[0]}won the game ! 😊`);
+      setGameWinner(`${gameState[0]} won the game ! 😊`);
     } else if (
       gameState[2] !== 'empty' &&
       gameState[2] === gameState[4] &&
@@ -81,7 +81,7 @@ function App(): JSX.Element {
   const onChangeItem = (itemNumber: number) => {
     if (gameWinner) {
       return Snackbar.show({
-        text: 'gameWinner',
+        text: gameWinner,
         backgroundColor: '#000000',
         textColor: '#FFFFFF',
       });
@@ -96,14 +96,13 @@ function App(): JSX.Element {
         textColor: '#FFF',
       });
     }
+    checkIsWinner();
   };
 
-  checkIsWinner();
 
   return (
     <>
-      <SafeAreaView>
-        <StatusBar />
+      <SafeAreaView style={styles.mainContainer}>
         {gameWinner ? (
           <View style={[styles.playerInfo, styles.winnerInfo]}>
             <Text style={styles.winnerText}>{gameWinner}</Text>
@@ -136,20 +135,82 @@ function App(): JSX.Element {
             </Pressable>
           )}
         />
+
+            {/* game action */}
+            <Pressable style={styles.gameButton}
+            onPress={reloadGame}
+            >
+              <Text style={styles.gameButtonText}>
+                {gameWinner ? 'Start new game' : 'reload the game'}
+              </Text>
+            </Pressable>
       </SafeAreaView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  playerInfo: {},
-  winnerInfo: {},
-  winnerText: {},
+  mainContainer:{
+   marginTop:100
+  },
+  playerInfo: {
+    height:56,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    paddingVertical: 8,
+    marginVertical: 12,
+    marginHorizontal: 14,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowColor: '#333',
+    shadowOpacity: 0.2,
+    shadowRadius: 1.5,
+  },
+  winnerInfo: {
+    borderRadius: 8,
+    backgroundColor: '#38CC77',
+    shadowOpacity: 0.1,
+  },
+  winnerText: {
+    fontSize: 20,
+    color: '#FFFFFF',
+    fontWeight: '600',
+    textTransform: 'capitalize',
+  },
   PlayerX: {},
   Player0: {},
-  gameTurnText: {},
+  gameTurnText: {
+    color:'#FFFFFF',
+    fontSize:20
+  },
   grid: {},
-  card: {},
+  card: {
+    height: 100,
+    width:135,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  gameButton:{
+    alignItems: 'center',
+
+    padding: 10,
+    borderRadius: 8,
+    marginHorizontal: 36,
+    backgroundColor: '#8D3DAF',
+  },
+  gameButtonText:{
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: '500',
+  }
+
 });
 
 export default App;
